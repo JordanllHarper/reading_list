@@ -1,0 +1,4 @@
+(executable
+ (public_name reading_list)
+ (name main)
+ (libraries reading_list))
