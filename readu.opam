@@ -2,12 +2,11 @@
 opam-version: "2.0"
 synopsis: "A short synopsis"
 description: "A longer description"
-maintainer: ["Maintainer Name"]
-authors: ["Author Name"]
-license: "LICENSE"
+maintainer: ["Jordan Harper"]
+authors: ["Jordan Harper"]
+license: "MIT"
 tags: ["topics" "to describe" "your" "project"]
 homepage: "https://github.com/username/reponame"
-doc: "https://url/to/documentation"
 bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "ocaml"

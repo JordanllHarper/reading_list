@@ -1,2 +1,3 @@
 (library
- (name reading_list))
+ (name readu)
+ (modules_without_implementation json_parser))

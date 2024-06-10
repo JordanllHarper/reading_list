@@ -21,7 +21,6 @@
 }
 
 
-
 ## CLI interface
 - readu - A CLI reading list tracker.
 

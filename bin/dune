@@ -1,4 +1,4 @@
 (executable
- (public_name reading_list)
+ (public_name readu)
  (name main)
- (libraries reading_list))
+ (libraries readu))

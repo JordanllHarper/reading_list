@@ -1,22 +1,21 @@
 (lang dune 3.15)
 
-(name reading_list)
+(name readu)
 
 (generate_opam_files true)
 
 (source
  (github username/reponame))
 
-(authors "Author Name")
+(authors "Jordan Harper")
 
-(maintainers "Maintainer Name")
+(maintainers "Jordan Harper")
 
-(license LICENSE)
+(license MIT)
 
-(documentation https://url/to/documentation)
 
 (package
- (name reading_list)
+ (name readu)
  (synopsis "A short synopsis")
  (description "A longer description")
  (depends ocaml dune)
