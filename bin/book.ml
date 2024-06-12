@@ -31,4 +31,3 @@ let from_json (json : Yojson.Safe.t) =
 
 let book_to_json_string book = to_json book |> Yojson.Safe.to_string
 let book_of_json_string json = Yojson.Safe.from_string json |> from_json
-let sum = if 5 > 7 then 7 else 67
