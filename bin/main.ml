@@ -29,5 +29,4 @@ let speclist = [ ("-p", Arg.Int set_optional_pages, "Set the number of pages") ]
 
 let () =
   Arg.parse speclist append_anonymous_arg base_msg;
-  (* print_args !anon_args; *)
   execute (List.rev !anon_args)
