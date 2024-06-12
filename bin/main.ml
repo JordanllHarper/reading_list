@@ -27,6 +27,16 @@ let execute anon_args =
 (* Spec *)
 let speclist = [ ("-p", Arg.Int set_optional_pages, "Set the number of pages") ]
 
+let create_readu_if_not_exists =
+  if not (Sys.file_exists Util.readu_path) then
+    try Sys.mkdir Util.readu_path 0o777 with
+    | Not_found ->
+        prerr_endline
+          "HOME environment variable not found. Please set your home \
+           environment variable before running readu again."
+    | _ -> prerr_endline "Something else went wrong :("
+
 let () =
+  create_readu_if_not_exists;
   Arg.parse speclist append_anonymous_arg base_msg;
   execute (List.rev !anon_args)

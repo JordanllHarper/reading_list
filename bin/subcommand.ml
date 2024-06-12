@@ -1,8 +1,8 @@
 type subcommand = Add | Remove
 
 let parse_subcommand cmd =
-  let trimmed = String.trim cmd in
-  match String.lowercase_ascii trimmed with
+  let trimmed_cmd = String.trim cmd in
+  match String.lowercase_ascii trimmed_cmd with
   | "add" -> Some Add
   | "remove" -> Some Remove
   | _ -> None

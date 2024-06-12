@@ -1,4 +1,4 @@
 (executable
  (public_name readu)
  (name main)
- (libraries readu yojson))
+ (libraries readu_lib yojson))
