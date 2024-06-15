@@ -1,4 +1,7 @@
-let base_msg = "readu [command]"
+open Subcommand
+open Util
+
+let _base_msg = "readu [command]"
 let anon_args = ref []
 let pages = ref (-1)
 
@@ -6,48 +9,45 @@ let pages = ref (-1)
 (* let volumes : int option ref = ref None *)
 (* let volume_chapters : int option ref = ref None *)
 
-let append_anonymous_arg arg = anon_args := arg :: !anon_args
+let _append_anonymous_arg arg = anon_args := arg :: !anon_args
 
-let create_optional_args_list pages =
+let _create_optional_args_list pages =
   let options = [] in
   pages :: options
 
 let handle_subcommands subcmd args options =
-  let subcommand = Subcommand.parse_subcommand subcmd in
+  let subcommand = parse_subcommand subcmd in
   match subcommand with
-  | None ->
-      Printf.printf "Invalid subcommand, please try typing readu --help";
-      ()
-  | Some v -> Subcommand.execute_subcommand args options v
+  | None -> Printf.printf "Invalid subcommand, please try typing readu --help"
+  | Some cmd -> execute_subcommand args options cmd
 
-let execute anon_args options =
+let _execute anon_args options =
   match anon_args with
   | [] ->
-      Printf.printf "Readu - A Reading list CLI tool. Type --help for options"
+      print_endline "Readu - A Reading list CLI tool. Type --help for options"
   | subcmd :: args -> handle_subcommands subcmd args options
 
 (* Spec *)
-let speclist =
-  [
-    ( "-pages",
-      Arg.Int (fun set_pages -> pages := set_pages),
-      "Set the number of pages" );
-  ]
+let _speclist =
+  [ ("-pages", Arg.Int (fun p -> pages := p), "Set the number of pages") ]
 
-let create_readu_if_not_exists =
-  if not (Sys.file_exists Util.readu_path) then
-    try Sys.mkdir Util.readu_path 0o777 with
+let _create_readu_if_not_exists =
+  if not (Sys.file_exists readu_path) then
+    try Sys.mkdir readu_path 0o777 with
     | Not_found ->
         prerr_endline
           "HOME environment variable not found. Please set your home \
            environment variable before running readu again."
     | _ -> prerr_endline "Something else went wrong :("
 
-let () =
-  create_readu_if_not_exists;
-  Arg.parse speclist append_anonymous_arg base_msg;
-  let deref_pages = !pages in
-  let maybe_pages = if deref_pages < 1 then None else Some deref_pages in
-  let options = create_optional_args_list maybe_pages in
+let _parse_pages deref_pages =
+  if deref_pages < 1 then None else Some deref_pages
 
-  execute (List.rev !anon_args) options
+let () = print_endline "Hello, worD!"
+(* create_readu_if_not_exists; *)
+(* Arg.parse speclist append_anonymous_arg base_msg; *)
+(* let opts = *)
+(*   !pages |> parse_pages |> create_optional_args_list |> filter_none *)
+(* in *)
+(* let args = List.rev !anon_args in *)
+(* execute args opts *)
