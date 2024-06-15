@@ -8,7 +8,7 @@ let parse_pages title remaining =
       new_book title integer_pages
 
 let write_book_to_json book =
-  let file_path = Util.books_path ^ book.title ^ ".json" in
+  let file_path = Util.book_path book.title in
   let oc = open_out file_path in
   let book_json = book_to_json_string book in
   Printf.fprintf oc "%s" book_json;
@@ -19,3 +19,9 @@ let handle_add args =
   match args with
   | [] -> prerr_endline "Error, no title given. Please give a title"
   | head :: tail -> parse_pages head tail |> write_book_to_json
+
+let handle_delete = function
+  | [] -> prerr_endline "Error, no title given. Please give a title"
+  | head :: _ ->
+      Util.book_path head |> Sys.remove;
+      print_endline "Book Deleted"
