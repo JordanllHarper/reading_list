@@ -1,31 +1,38 @@
 let base_msg = "readu [command]"
-(* let add_msg = "readu add <title> [-c] [-p] [-v] [-vc]" *)
-
-(* Args *)
 let anon_args = ref []
-let pages : int option ref = ref None
+let pages = ref (-1)
 
 (* let chapters : int option ref = ref None *)
 (* let volumes : int option ref = ref None *)
 (* let volume_chapters : int option ref = ref None *)
 
-(* Setters *)
-let set_optional_pages opt_pages = pages := Some opt_pages
 let append_anonymous_arg arg = anon_args := arg :: !anon_args
 
-let execute anon_args =
+let create_optional_args_list pages =
+  let options = [] in
+  pages :: options
+
+let handle_subcommands subcmd args options =
+  let subcommand = Subcommand.parse_subcommand subcmd in
+  match subcommand with
+  | None ->
+      Printf.printf "Invalid subcommand, please try typing readu --help";
+      ()
+  | Some v -> Subcommand.execute_subcommand args options v
+
+let execute anon_args options =
   match anon_args with
-  | [] -> Printf.printf "Readu - A Reading list CLI tool"
-  | subcmd :: args -> (
-      let subcommand = Subcommand.parse_subcommand subcmd in
-      match subcommand with
-      | None ->
-          Printf.printf "Error something went wrong here...";
-          ()
-      | Some v -> Subcommand.execute_subcommand v args)
+  | [] ->
+      Printf.printf "Readu - A Reading list CLI tool. Type --help for options"
+  | subcmd :: args -> handle_subcommands subcmd args options
 
 (* Spec *)
-let speclist = [ ("-p", Arg.Int set_optional_pages, "Set the number of pages") ]
+let speclist =
+  [
+    ( "-pages",
+      Arg.Int (fun set_pages -> pages := set_pages),
+      "Set the number of pages" );
+  ]
 
 let create_readu_if_not_exists =
   if not (Sys.file_exists Util.readu_path) then
@@ -39,4 +46,8 @@ let create_readu_if_not_exists =
 let () =
   create_readu_if_not_exists;
   Arg.parse speclist append_anonymous_arg base_msg;
-  execute (List.rev !anon_args)
+  let deref_pages = !pages in
+  let maybe_pages = if deref_pages < 1 then None else Some deref_pages in
+  let options = create_optional_args_list maybe_pages in
+
+  execute (List.rev !anon_args) options

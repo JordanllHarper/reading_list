@@ -1,8 +1,7 @@
 let readu_path = Sys.getenv "HOME" ^ "/.readu"
 let book_path title = readu_path ^ "/" ^ title ^ ".json"
+let apply_if_some (f : 'a -> unit) = function Some x -> f x | None -> ()
 
-let rec print_items_in_list = function
-  | [] -> ()
-  | head :: tail ->
-      print_string head;
-      print_items_in_list tail
+let print_items_in_list mapping items =
+  let mapped = List.map mapping items in
+  List.iter print_endline mapped

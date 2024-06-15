@@ -7,6 +7,6 @@ let parse_subcommand cmd =
   | "remove" -> Some Remove
   | _ -> None
 
-let execute_subcommand args = function
-  | Add -> Handlers.handle_add args
-  | Remove -> Handlers.handle_delete args
+let execute_subcommand args options = function
+  | Add -> Handlers.handle_add args options
+  | Remove -> Handlers.handle_remove args
