@@ -15,14 +15,9 @@ let read_book_of_json_file_name file_name =
 
 let get_all_books () =
   let read_files = Sys.readdir Util.readu_path in
-  let maybe_books : Book.t option array =
-    Array.map read_book_of_json_file_name read_files
-  in
-
-  Array.to_list maybe_books
+  Array.map read_book_of_json_file_name read_files |> Array.to_list
 
 let write_book_to_json (book : Book.t) =
-  print_endline book.title;
   let file_path = Util.get_book_path book.title in
   let oc = open_out file_path in
   let book_json = Book.book_to_json_string book in
